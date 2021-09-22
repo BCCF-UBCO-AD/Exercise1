@@ -9,3 +9,6 @@ file(GLOB SOURCES src/*.cpp)
 file(GLOB THIRDPARTY src/third-party/*.cpp)
 add_executable(ex1 main.cpp ${SOURCES} ${THIRDPARTY})
 add_executable(test-duplicate-fn tests/duplicate-detection.cpp ${SOURCES} ${THIRDPARTY})
+add_executable(test-files-fn tests/files.cpp ${SOURCES} ${THIRDPARTY})
+
+file(COPY test-files DESTINATION ${CMAKE_BINARY_DIR})
