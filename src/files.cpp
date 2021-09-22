@@ -1,6 +1,6 @@
 #include "files.h"
 
-void getFiles(std::string directory, std::vector<fs::path> &files) {
+void getFiles(const char* directory, std::vector<fs::path> &files) {
     unsigned int count = 0;
     unsigned int max = 0xFF;
     auto root = fs::u8path(directory);

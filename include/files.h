@@ -1,4 +1,4 @@
 #pragma once
 #include "common.h"
 
-extern void getFiles(std::string directory, std::vector<fs::path> &files);
+extern void getFiles(const char* directory, std::vector<fs::path> &files);
