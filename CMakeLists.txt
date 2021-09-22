@@ -3,4 +3,9 @@ project(ex1)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(ex1 main.cpp)
+include_directories(include)
+include_directories(include/third-party)
+file(GLOB SOURCES src/*.cpp)
+file(GLOB THIRDPARTY src/third-party/*.cpp)
+add_executable(ex1 main.cpp ${SOURCES} ${THIRDPARTY})
+add_executable(test-duplicate-fn tests/duplicate-detection.cpp ${SOURCES} ${THIRDPARTY})

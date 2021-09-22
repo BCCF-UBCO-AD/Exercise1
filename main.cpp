@@ -1,5 +1,7 @@
 #include <iostream>
 #include <getopt.h>
+#include "common.h"
+#include "md5-duplicate-detection.h"
 
 int main(int argc, char* argv[]) {
 
@@ -27,5 +29,8 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    //    fs::path A("test-files/A");
+    //    fs::path B("test-files/B");
+    //    is_data_duplicate(A,B);
     return 0;
 }
