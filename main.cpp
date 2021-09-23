@@ -2,7 +2,6 @@
 #include <filesystem>
 #include <getopt.h>
 #include <vector>
-#include "common.h"
 #include "encrypt-decrypt.h"
 #include "files.h"
 
@@ -20,7 +19,7 @@ int main(int argc, char *argv[]) {
                         {"help",     no_argument, NULL,  'h' },
                         {"encrypt",  no_argument, NULL,  'e' },
                         {"decrypt",  no_argument, NULL,  'd' },
-                        {NULL,      0,           NULL,  0  }
+                        {NULL,      0,    NULL,   0  }
                 };
         opt = getopt_long(argc, argv, "he:d:", long_options, &option_index);
 
@@ -29,7 +28,9 @@ int main(int argc, char *argv[]) {
 
         switch (opt) {
             case 'h':
-                printf("help command\n");    //placeholder
+                printf("ex1 -e --encrypt -d --decrypt\n"
+                       "-e --encrypt \".../path-to-root\"  | Encrypts files in a given directory and accepts the root path as an argument\n"
+                       "-d --decrypt \".../path-to-root\"  | Decrypts encrypted files from this program and accepts the root path as an argument\n");    //placeholder
                 break;
             case 'e':
                 directory = optarg;
