@@ -4,57 +4,49 @@ using namespace std;
 
 char curr;
 
-// Random key to use for encryption/decryption
+// Random key used for encryption/decryption
 int key = 214748;
 
-void encrypt(fs::path &input, fs::path &output) {
-    fstream finput, foutput;
+void encrypt(fs::path &input) {
+    fstream finput;
 
-    finput.open(input, fstream::in);
+    finput.open(input, fstream::in | fstream::out);
     if (!finput) {
         cout << "Input file not found. \n";
         return;
     }
 
-    foutput.open(output, fstream::out);
-    if (!foutput) {
-        cout << "An error occurred when creating output file. \n";
-        return;
-    }
-
+    // Encrypt each character in-place
     while (finput >> noskipws >> curr) {
         int temp = (curr + key);
-        foutput << (char) temp;
+        finput.seekp((finput.tellp() - static_cast<streampos>(1)));
+        finput.put((char) temp);
+        finput.seekp(finput.tellp());
     }
 
     finput.close();
-    foutput.close();
 
-    std::cout << "Encryption complete. Output can be found in " << output.filename() << "\n";
+    std::cout << "Encryption complete. Output can be found in " << input.filename() << "\n";
 }
 
-void decrypt(fs::path &input, fs::path &output) {
-    fstream finput, foutput;
+void decrypt(fs::path &input) {
+    fstream finput;
 
-    finput.open(input, fstream::in);
+    finput.open(input, fstream::in | fstream::out);
     if (!finput) {
         cout << "Input file not found. \n";
         return;
     }
 
-    foutput.open(output, fstream::out);
-    if (!foutput) {
-        cout << "An error occurred when creating output file. \n";
-        return;
-    }
-
+    // Decrypt each character in-place
     while (finput >> noskipws >> curr) {
         int temp = (curr - key);
-        foutput << (char) temp;
+        finput.seekp((finput.tellp() - static_cast<streampos>(1)));
+        finput.put((char) temp);
+        finput.seekp(finput.tellp());
     }
 
     finput.close();
-    foutput.close();
 
-    std::cout << "Decryption complete. Output can be found in " << output.filename() << "\n";
+    std::cout << "Decryption complete. Output can be found in " << input.filename() << "\n";
 }
