@@ -9,10 +9,11 @@ int main(){
     fs::path encryptedOutput("test-files/file_encrypted.txt");
     fs::path decryptedOutput("test-files/file_decrypted.txt");
 
-    encrypt(input, encryptedOutput);
-    assert(!is_data_duplicate(input, encryptedOutput));
+    encrypt(input);
+    assert(is_data_duplicate(input, encryptedOutput));
 
-    decrypt(encryptedOutput, decryptedOutput);
-    assert(is_data_duplicate(input,decryptedOutput));
+    decrypt(input);
+    assert(is_data_duplicate(input, decryptedOutput));
+
     std::cout << "test passed\n";
 }
