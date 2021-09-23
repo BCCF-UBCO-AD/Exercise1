@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.20)
 project(ex1)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -10,3 +10,5 @@ file(GLOB THIRDPARTY src/third-party/*.cpp)
 add_executable(ex1 main.cpp ${SOURCES} ${THIRDPARTY})
 add_executable(test-duplicate-fn tests/duplicate-detection.cpp ${SOURCES} ${THIRDPARTY})
 add_executable(test-encrypt-decrypt-fn tests/encrypt-decrypt.cpp ${SOURCES} ${THIRDPARTY})
+add_executable(test-files-fn tests/files.cpp ${SOURCES} ${THIRDPARTY})
+file(COPY test-files DESTINATION ${CMAKE_BINARY_DIR})
