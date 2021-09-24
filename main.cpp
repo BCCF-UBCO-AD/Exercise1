@@ -17,16 +17,14 @@ int main(int argc, char *argv[]) {
                     {"decrypt",  no_argument, NULL,  'd' },
                     {NULL,      0,    NULL,   0  }
             };
-    opt = getopt_long(argc, argv, "he:d:f:", long_options, &option_index);
-    if (opt == -1){
-        std::cout << "No arguments found use -h to see usage information" << std::endl;
-    }
+
     while (opt != -1) { //getopt creates a data-structure that can be looped through from the argv array to process the parameters and their arguments
 
-
+        opt = getopt_long(argc, argv, "he:d:f:", long_options, &option_index);
 
         switch (opt) {
             case 'h':
+                eord = -2;
                 printf("Usage: ex1 [OPTION]...[\"DIRECTORY\"]..\n"
                        "Used to encrypt and decrypt directories given a root path as the argument. You can only\n"
                        "use on argument at a time encrypt or decrypt\n\n"
@@ -65,6 +63,11 @@ int main(int argc, char *argv[]) {
                 printf("no arguments\n");    //default non-argument case
                 break;
         }
+    }
+
+
+    if (eord == -1){
+        std::cout << "No arguments found use -h to see usage information" << std::endl;
     }
 
     getFiles(directory, files);
