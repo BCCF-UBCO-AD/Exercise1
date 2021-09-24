@@ -18,9 +18,11 @@ int main(int argc, char *argv[]) {
                     {NULL,      0,    NULL,   0  }
             };
 
-    while (opt != -1) { //getopt creates a data-structure that can be looped through from the argv array to process the parameters and their arguments
-
+    auto parsing = [&](){
         opt = getopt_long(argc, argv, "he:d:f:", long_options, &option_index);
+        return opt != -1;
+    };
+    while (parsing()) { //getopt creates a data-structure that can be looped through from the argv array to process the parameters and their arguments
 
         switch (opt) {
             case 'h':
@@ -59,7 +61,7 @@ int main(int argc, char *argv[]) {
                 }
                 break;
             default:
-                std::cout << "No arguments found use -h to see usage information" << std::endl;    //default non-argument case
+                std::cout << "Invalid Option: " << opt << "\nNo arguments found use -h to see usage information" << std::endl;    //default non-argument case
                 break;
         }
     }
