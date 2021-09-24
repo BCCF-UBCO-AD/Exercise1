@@ -6,51 +6,69 @@
 
 int main(int argc, char *argv[]) {
 
-    int opt;
+    int opt, option_index = 0, eord = -1;
     const char *directory;
     std::vector<fs::path> files;
+    static struct option long_options[] =
+            {
+                    {"help",     no_argument, NULL,  'h' },
+                    {"encrypt",  no_argument, NULL,  'e' },
+                    {"decrypt",  no_argument, NULL,  'd' },
+                    {NULL,      0,    NULL,   0  }
+            };
 
-    while (true) { //getopt creates a data-structure that can be looped through from the argv array to process the parameters and their arguments
 
-        int option_index = 0;
-        static struct option long_options[] =
-                {
-                        {"help",     no_argument, NULL,  'h' },
-                        {"encrypt",  no_argument, NULL,  'e' },
-                        {"decrypt",  no_argument, NULL,  'd' },
-                        {NULL,      0,    NULL,   0  }
-                };
+    while (opt != -1) { //getopt creates a data-structure that can be looped through from the argv array to process the parameters and their arguments
+
         opt = getopt_long(argc, argv, "he:d:", long_options, &option_index);
-
-        if(opt == -1)
-            break;
 
         switch (opt) {
             case 'h':
-                printf("ex1 -e --encrypt -d --decrypt\n"
-                       "-e --encrypt \".../path-to-root\"  | Encrypts files in a given directory and accepts the root path as an argument\n"
-                       "-d --decrypt \".../path-to-root\"  | Decrypts encrypted files from this program and accepts the root path as an argument\n");    //placeholder
+                printf("Usage: ex1 [OPTION]...[ARG]..\n"
+                       "Used to encrypt and decrypt directories given a root path as the argument. You can only\n"
+                       "use on argument at a time encrypt or decrypt\n\n"
+                       "options:\n"
+                       "-e, --encrypt     | Encrypts files in a given directory and accepts the root path as an argument \n"
+                       "-d, --decrypt     | Decrypts encrypted files from this program and accepts the root path as an argument\n"
+                       "-h, --help        | Prints help message\n"
+                );    //placeholder
                 break;
             case 'e':
-                directory = optarg;
-                getFiles(directory, files);
-                for (fs::path &i: files) {
-                    encrypt(i);
-                    std::cout << "Encrypted " << i.string() << "\n";
+                if (eord < 0) {
+                    directory = optarg;
+                    eord = 0;
+                }else{
+                    eord = 2;
                 }
                 break;
             case 'd':
+                if (eord < 0) {
                 directory = optarg;
-                getFiles(directory, files);
-                for (fs::path &i: files) {
-                    decrypt(i);
-                    std::cout << "Decrypted " << i.string() << "\n";
+                eord = 1;
+                }else{
+                    eord = 2;
                 }
                 break;
             case 1:
                 printf("no arguments\n");    //default non-argument case
                 break;
         }
+    }
+
+    if(eord == 0){
+        getFiles(directory, files);
+        for (fs::path &i: files) {
+            encrypt(i);
+            std::cout << "Encrypted " << i.string() << "\n";
+        }
+    }else if(eord == 1){
+        getFiles(directory, files);
+        for (fs::path &i: files) {
+            decrypt(i);
+            std::cout << "Decrypted " << i.string() << "\n";
+        }
+    }else if(eord == 2){
+        std::cout << "Must choose either encrypt or decrypt" << std::endl;
     }
 
     return 0;
