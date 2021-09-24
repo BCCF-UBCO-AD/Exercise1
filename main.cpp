@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
 
         switch (opt) {
             case 'h':
-                eord = -2;
                 printf("Usage: ex1 [OPTION]...[\"DIRECTORY\"]..\n"
                        "Used to encrypt and decrypt directories given a root path as the argument. You can only\n"
                        "use on argument at a time encrypt or decrypt\n\n"
@@ -59,15 +58,10 @@ int main(int argc, char *argv[]) {
                     eord = 2;
                 }
                 break;
-            case 1:
-                printf("no arguments\n");    //default non-argument case
+            default:
+                std::cout << "No arguments found use -h to see usage information" << std::endl;    //default non-argument case
                 break;
         }
-    }
-
-
-    if (eord == -1){
-        std::cout << "No arguments found use -h to see usage information" << std::endl;
     }
 
     getFiles(directory, files);
@@ -86,12 +80,10 @@ int main(int argc, char *argv[]) {
         std::cout << "Must choose either encrypt or decrypt or file duplication check" << std::endl;
     }else if(eord ==3){
 
-        for(fs::path &file1: files){
-            for(fs::path &file2: files){
-                if(file1 == file2) //compares file objects to ensure it doesn't compare to itself.
-                    break;
-                if(is_data_duplicate(file1, file2)){
-                    std::cout << file1.string() << " and " << file2.string() << " are duplicates.\n";
+        for(int f1 = 0; f1 < files.size(); ++f1){
+            for(int f2 = f1 + 1; f2 < files.size(); ++f2) {
+                if(is_data_duplicate(files[f1], files[f2] )){
+                    std::cout << files[f1].string() << " and " << files[f2].string() << " are duplicates.\n";
                 }
             }
         }
