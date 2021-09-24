@@ -12,3 +12,9 @@ add_executable(test-duplicate-fn tests/duplicate-detection.cpp ${SOURCES} ${THIR
 add_executable(test-encrypt-decrypt-fn tests/encrypt-decrypt.cpp ${SOURCES} ${THIRDPARTY})
 add_executable(test-files-fn tests/files.cpp ${SOURCES} ${THIRDPARTY})
 file(COPY test-files DESTINATION ${CMAKE_BINARY_DIR})
+
+set(CMAKE_EXE_LINKER_FLAGS " -static")
+target_link_libraries(ex1 -static-libgcc -static-libstdc++)
+target_link_libraries(test-duplicate-fn -static-libgcc -static-libstdc++)
+target_link_libraries(test-encrypt-decrypt-fn -static-libgcc -static-libstdc++)
+target_link_libraries(test-files-fn -static-libgcc -static-libstdc++)
